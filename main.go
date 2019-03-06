@@ -1,13 +1,18 @@
 package main
 
 import (
-    "github.com/andoshin11/go-web-app/src/controller"
+    "net/http"
     "github.com/gin-gonic/gin"
 )
 
 func main() {
     router := gin.Default()
+    router.LoadHTMLGlob("views/*.html")
+    router.Static("/assets", "./assets")
 
-    router.GET("/", controller.IndexGET)
+    router.GET("/", func(ctx *gin.Context){
+        ctx.HTML(http.StatusOK, "index.html", gin.H{})
+    })
+
     router.Run(":8080")
 }
